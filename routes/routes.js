@@ -12,13 +12,13 @@ const appRouter = function(app) {
 };
 
 function sendMessageToChatwork(payload) {
+
     const message = `TO ALL >>>
-    [info][title]framgia/FunJapanRenewal#fbc0fcd7b306a1f6a8a9f0cfc25422b6d811c655 SUCCESS[/title]Branch: develop
-    Author: KhanhLD
-    Message: Merge pull request #1205 from Taipt-Framgia/fix-some-bug-21
+    [info][title]${payload.pull_request.head.base.repo.full_name}[/title]Branch: ${payload.pull_request.base.ref}
+    Author: ${payload.pull_request.head.user.login}
+    Message: Merge pull request #${payload.pull_request.id} from ${payload.pull_request.head.repo.full_name}
     
-    Fix bug comment
-    http://ci-reports.framgia.vn/repositories/framgia/FunJapanRenewal/builds/5511/violations/[/info]`;
+    ${payload.pull_request.title}[/info]`;
 
     const clientServerOptions = {
         uri: 'https://api.chatwork.com/v2/rooms/57764352/messages',
