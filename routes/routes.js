@@ -31,7 +31,7 @@ function sendMessageToChatwork(roomid, mergeUserid, payload) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'X-ChatWorkToken': keys.CHATWORK_TOKEN
+                'X-ChatWorkToken': process.env.CHATWORK_TOKEN || keys.CHATWORK_TOKEN
             }
         }
     
