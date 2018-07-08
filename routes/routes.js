@@ -13,28 +13,34 @@ const appRouter = function(app) {
 
 function sendMessageToChatwork(payload) {
     console.log('payload', payload)
+    const pullRequest = payload.pull_request;
+    const repository = payload.repository;
 
-    const message = `TO ALL >>>
-    [info][title]${payload.pull_request.head.base.repo.full_name}[/title]Branch: ${payload.pull_request.base.ref}
-    Author: ${payload.pull_request.head.user.login}
-    Message: Merge pull request #${payload.pull_request.id} from ${payload.pull_request.head.repo.full_name}
+    if (pullRequest.merged) {
+        const message = `TO ALL >>>
+        [info][title]${repository.full_name}[/title]Branch: ${pullRequest.base.ref}
+    Author: ${pullRequest.merged_by.login}
+    Message: Merge pull request #${pullRequest.number} from ${pullRequest.head.repo.full_name}
     
-    ${payload.pull_request.title}[/info]`;
-
-    const clientServerOptions = {
-        uri: 'https://api.chatwork.com/v2/rooms/57764352/messages',
-        body: `body=${message}`,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-ChatWorkToken': 'bbfa072b20cb0d91e7995c8f7bc6e633'
+    PR title: ${pullRequest.title}[/info]`;
+    
+        const clientServerOptions = {
+            uri: 'https://api.chatwork.com/v2/rooms/57764352/messages',
+            body: `body=${message}`,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-ChatWorkToken': 'bbfa072b20cb0d91e7995c8f7bc6e633'
+            }
         }
+    
+        request(clientServerOptions, function (error, response) {
+            console.log(error,response.body);
+            return;
+        });
     }
 
-    request(clientServerOptions, function (error, response) {
-        console.log(error,response.body);
-        return;
-    });
+    return;
 }
 
 module.exports = appRouter;
