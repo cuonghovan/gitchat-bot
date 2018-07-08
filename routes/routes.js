@@ -17,12 +17,8 @@ function sendMessageToChatwork(payload) {
     const repository = payload.repository;
 
     if (pullRequest.merged) {
-        const message = `TO ALL >>>
-        [info][title]${repository.full_name}[/title]Branch: ${pullRequest.base.ref}
-    Author: ${pullRequest.merged_by.login}
-    Message: Merge pull request #${pullRequest.number} from ${pullRequest.head.repo.full_name}
-    
-    PR title: ${pullRequest.title}[/info]`;
+        const message = 
+        `TO ALL >>>[info][title]${repository.full_name}[/title]Branch: ${pullRequest.base.ref}%0D%0AAuthor: ${pullRequest.merged_by.login}%0D%0AMessage: Merge pull request #${pullRequest.number} from ${pullRequest.head.repo.full_name}%0D%0APR title: ${pullRequest.title}[/info]`;
     
         const clientServerOptions = {
             uri: 'https://api.chatwork.com/v2/rooms/57764352/messages',
