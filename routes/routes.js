@@ -20,9 +20,9 @@ function sendMessageToChatwork(roomid, mergeUserid, payload) {
         var message = '';
 
         if (pullRequest.state === 'open') {
-            message = `[To:${mergeUserid}][info][title]${repository.full_name} (flex)[/title]Branch: ${pullRequest.base.ref}%0D%0AMessage: New pull request #${pullRequest.number} from ${pullRequest.head.repo.full_name}%0D%0APR title: ${pullRequest.title}[/info]`;
+            message = `[To:${mergeUserid}][info][title]${repository.full_name} (*)[/title]Branch: ${pullRequest.base.ref}%0D%0AMessage: New pull request #${pullRequest.number} from ${pullRequest.head.repo.full_name}%0D%0ATitle: ${pullRequest.title}[/info]`;
         } else {
-            message = `TO ALL >>>[info][title]${repository.full_name} (dance)[/title]Branch: ${pullRequest.base.ref}%0D%0AAuthor: ${pullRequest.merged_by.login}%0D%0AMessage: Merged pull request #${pullRequest.number} from ${pullRequest.head.repo.full_name}%0D%0APR title: ${pullRequest.title}[/info]`;
+            message = `TO ALL >>>[info][title]${repository.full_name} (dance)[/title]Branch: ${pullRequest.base.ref}%0D%0AAuthor: ${pullRequest.merged_by.login}%0D%0AMessage: Merged pull request #${pullRequest.number} from ${pullRequest.head.repo.full_name}%0D%0ATitle: ${pullRequest.title}[/info]`;
         }
     
         const clientServerOptions = {
