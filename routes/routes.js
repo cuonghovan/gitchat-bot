@@ -7,6 +7,7 @@ const appRouter = function(app) {
     });
 
     app.post('/webhook/:roomid/:mergeUserid/pullrequests', function(req, res) {
+        console.log(req);
         sendMessageToChatwork(req.params.roomid, req.params.mergeUserid, req.body);
         res.status(200).send('ok');
     });
