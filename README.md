@@ -1,2 +1,2 @@
 # gitchat-bot
-A chatwork bot that sends message when github repository events are triggered.
+A Chatwork bot that sends messages to a specified chat room when pull requests are created or merged on Github or Bitbucket repositories.
