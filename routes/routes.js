@@ -7,10 +7,7 @@ const appRouter = function(app) {
     });
 
     app.post('/webhook/:roomid/:mergeUserid/pullrequests', function(req, res) {
-        const userAgent = req.headers['user-agent'];
-
-        if (userAgent == 'Bitbucket-Webhooks/2.0') {
-            console.log(req.body.pullrequest)
+        if (req.headers['user-agent'] == 'Bitbucket-Webhooks/2.0') {
             sendFromBitbucket(req.params.roomid, req.params.mergeUserid, req.body);
         } else {
             sendFromGithub(req.params.roomid, req.params.mergeUserid, req.body);
@@ -28,7 +25,7 @@ function sendFromBitbucket(roomid, mergeUserid, payload) {
         var message = '';
 
         if (pullRequest.state === 'OPEN') {
-            message = `[To:${mergeUserid}][info][title]${repository.full_name} (*)[/title]Branch: ${pullRequest.destination.branch.name}%0D%0AAuthor: ${pullRequest.author.username}%0D%0AMessage: New pull request #${pullRequest.id} from ${pullRequest.source.repository.full_name}%0D%0ATitle: ${pullRequest.title}[/info]`;
+            message = `[To:${mergeUserid}][info][title]${repository.full_name} (*)[/title]Branch: ${pullRequest.destination.branch.name}%0D%0AMessage: New pull request #${pullRequest.id} from ${pullRequest.source.repository.full_name}%0D%0ATitle: ${pullRequest.title}[/info]`;
         } else {
             message = `TO ALL >>>[info][title]${repository.full_name} (dance)[/title]Branch: ${pullRequest.destination.branch.name}%0D%0AAuthor: ${pullRequest.author.username}%0D%0AMessage: Merged pull request #${pullRequest.id} from ${pullRequest.source.repository.full_name}%0D%0ATitle: ${pullRequest.title}[/info]`;
         }
